@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  
+</head>
+
+<body>
+ <form>
+     <label for="Control">
+        Control %
+     </label>
+     <input type="number" id="Control" step="any" min=0>
+     <label for="Exposed">
+        Exposed %
+     </label>
+     <input type="number" id="Exposed" step="any" min=0>
+     <label for="Confidence">
+        Confidence Interval
+     </label>
+     <select id="Confidence">
+<option value="1.64">
+    95%
+</option>
+<option value="1.28">
+    90%
+</option>
+<option value="0.84">
+    80%
+</option>
+     </select>
+<input type="submit" value="Calculate">
+ </form>
+ <p id="Result">
+
+ </p>
+ <script type="text/javascript">
+    function calculate (e) {
+        e.preventDefault();
+        const control = parseFloat(document.getElementById("Control").value)/100;
+        const exposed = parseFloat(document.getElementById("Exposed").value)/100;
+        const confidence = parseFloat(document.getElementById("Confidence").value);
+    const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
+    document.getElementById("Result").innerText=sample_size;
+    }
+    document.getElementsByTagName("form")[0].addEventListener("submit", calculate)
+      </script>
+</body>
+</html>
