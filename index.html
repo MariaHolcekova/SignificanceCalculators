@@ -103,6 +103,12 @@ Significance calculator
     else {
     document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
     }
+    if(sample_size<100) {
+        document.getElementById("Result").innerText=`The minimum sample size required per each bucket is 100`;
+    }
+    else {
+    document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
+    }
     }
     document.getElementById("Sample").addEventListener("submit", calculate_sample)
 
