@@ -7,15 +7,20 @@
 </head>
 
 <body>
- <form>
+    <p>
+        Sample Size calculator
+        </p>
+ <form id="Sample">
      <label for="Control">
         Control %
      </label>
      <input type="number" id="Control" step="any" min=0>
+     <br>
      <label for="Exposed">
         Exposed %
      </label>
      <input type="number" id="Exposed" step="any" min=0>
+     <br>
      <label for="Confidence">
         Confidence Interval
      </label>
@@ -30,21 +35,110 @@
     80%
 </option>
      </select>
+     <br>
 <input type="submit" value="Calculate">
  </form>
  <p id="Result">
-
  </p>
+ <br>
+
+<p>
+Significance calculator
+</p>
+
+<form id="Significance">
+    <label for="ControlSample1">
+        Control sample size
+     </label>
+     <input type="number" id="ControlSample1" step="any" min=0>
+     <label for="Control1">
+        Control %
+     </label>
+     <input type="number" id="Control1" step="any" min=0>
+    <br>
+
+    <label for="ExposedSample1">
+        Exposed Sample size
+     </label>
+     <input type="number" id="ExposedSample1" step="any" min=0>
+    <label for="Exposed1">
+       Exposed %
+    </label>
+    <input type="number" id="Exposed1" step="any" min=0>
+    <br>
+
+<input type="submit" value="Calculate">
+</form>
+<p id="Result1">
+</p>
+<br>
  <script type="text/javascript">
-    function calculate (e) {
+    function calculate_sample (e) {
         e.preventDefault();
         const control = parseFloat(document.getElementById("Control").value)/100;
         const exposed = parseFloat(document.getElementById("Exposed").value)/100;
         const confidence = parseFloat(document.getElementById("Confidence").value);
     const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
-    document.getElementById("Result").innerText=sample_size;
+    document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
     }
-    document.getElementsByTagName("form")[0].addEventListener("submit", calculate)
+    document.getElementById("Sample").addEventListener("submit", calculate_sample)
+
+    function round5(x)
+{
+    return Math.floor(x/5)*5;
+}
+    function stdNormal(z) {
+    var j, k, kMax, m, values, total, subtotal, item, z2, z4, a, b;
+
+    // Power series is not stable at these extreme tail scenarios
+    if (z < -6) { return 0; }
+    if (z >  6) { return 1; }
+
+    m      = 1;        // m(k) == (2**k)/factorial(k)
+    b      = z;        // b(k) == z ** (2*k + 1)
+    z2     = z * z;    // cache of z squared
+    z4     = z2 * z2;  // cache of z to the 4th
+    values = [];
+
+    // Compute the power series in groups of two terms.
+    // This reduces floating point errors because the series
+    // alternates between positive and negative.
+    for (k=0; k<100; k+=2) {
+        a = 2*k + 1;
+        item = b / (a*m);
+        item *= (1 - (a*z2)/((a+1)*(a+2)));
+        values.push(item);
+        m *= (4*(k+1)*(k+2));
+        b *= z4;
+    }
+
+    // Add the smallest terms to the total first that
+    // way we minimize the floating point errors.
+    total = 0;
+    for (k=49; k>=0; k--) {
+        total += values[k];
+    }
+
+    // Multiply total by 1/sqrt(2*PI)
+    // Then add 0.5 so that stdNormal(0) === 0.5
+    return round5((1-(0.5 + 0.3989422804014327 * total))*100);
+}
+
+    function calculate_sig (e) {
+        e.preventDefault();
+        const control_sample = parseFloat(document.getElementById("ControlSample1").value);
+        const control_perc = parseFloat(document.getElementById("Control1").value)/100;
+        const control_se = Math.sqrt((control_perc*(1-control_perc)/control_sample));
+        const exposed_sample = parseFloat(document.getElementById("ExposedSample1").value);
+        const exposed_perc = parseFloat(document.getElementById("Exposed1").value)/100;
+        const exposed_se = Math.sqrt((exposed_perc*(1-exposed_perc)/exposed_sample));
+        const delta = exposed_perc - control_perc;
+        const z_score = Math.abs(delta)/Math.sqrt(Math.pow(control_se,2)+(Math.pow(exposed_se,2)))
+    const significance = stdNormal(z_score)
+
+    document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;
+    }
+    document.getElementById("Significance").addEventListener("submit", calculate_sig)
       </script>
 </body>
 </html>
