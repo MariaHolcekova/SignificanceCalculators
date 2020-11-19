@@ -170,6 +170,12 @@ Significance calculator
     else {
         document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;;
     }
+    if(significance < 5) {
+        document.getElementById("Result1").innerText=`he difference is significant at 99% confidence interval`;
+    }
+    else {
+        document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;;
+    }
     }
     
     document.getElementById("Significance").addEventListener("submit", calculate_sig)
