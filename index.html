@@ -97,7 +97,12 @@ Significance calculator
         const exposed = parseFloat(document.getElementById("Exposed").value)/100;
         const confidence = parseFloat(document.getElementById("Confidence").value);
     const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
+    if(control==exposed) {
+        document.getElementById("Result").innerText=`The percentages cannot be equal`;
+    }
+    else {
     document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
+    }
     }
     document.getElementById("Sample").addEventListener("submit", calculate_sample)
 
@@ -157,6 +162,8 @@ Significance calculator
     document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;
     }
     document.getElementById("Significance").addEventListener("submit", calculate_sig)
+
+
       </script>
 </body>
 </html>
