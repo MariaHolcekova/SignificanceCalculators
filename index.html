@@ -76,7 +76,7 @@ Significance calculator
     <br>
 
     <label for="ExposedSample1">
-        Exposed Sample size
+        Exposed sample size
      </label>
      <input type="number" id="ExposedSample1" step="any" min=1>
     <label for="Exposed1">
@@ -164,9 +164,14 @@ Significance calculator
         const delta = exposed_perc - control_perc;
         const z_score = Math.abs(delta)/Math.sqrt(Math.pow(control_se,2)+(Math.pow(exposed_se,2)))
     const significance = stdNormal(z_score)
-
-    document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;
+    if(control_sample<30 | exposed_sample<30) {
+        document.getElementById("Result1").innerText=`The minimum required sample size in each bucket is 30`;
     }
+    else {
+        document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;;
+    }
+    }
+    
     document.getElementById("Significance").addEventListener("submit", calculate_sig)
 
 
