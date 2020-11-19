@@ -7,9 +7,24 @@
 </head>
 
 <body>
+    <h1>
+        Sample Size and Significance calculators
+    </h1>
+        <br>
+
+    <p>
+        
+        </p>
+        <br>
+
     <p>
         Sample Size calculator
         </p>
+    <p>
+        The sample size calculator lets you find out the minimum sample size required in order to detect a statistically significant difference of a certain value between your Control and Exposed groups.
+        <br>It determines the minimum sample size for three different levels of statistical significance (i.e. confidence intervals): 80%, 90%, and 95%.
+        </p>
+        <br>
  <form id="Sample">
      <label for="Control">
         Control %
@@ -45,12 +60,15 @@
 <p>
 Significance calculator
 </p>
-
+<p>
+    The significance calculator is a great way to quickly test whether your NBE results might be statistically significant at a different level than the one tested in the Nielsen report.
+    </p>
+    <br>
 <form id="Significance">
     <label for="ControlSample1">
         Control sample size
      </label>
-     <input type="number" id="ControlSample1" step="any" min=0>
+     <input type="number" id="ControlSample1" step="any" min=1>
      <label for="Control1">
         Control %
      </label>
@@ -60,7 +78,7 @@ Significance calculator
     <label for="ExposedSample1">
         Exposed Sample size
      </label>
-     <input type="number" id="ExposedSample1" step="any" min=0>
+     <input type="number" id="ExposedSample1" step="any" min=1>
     <label for="Exposed1">
        Exposed %
     </label>
