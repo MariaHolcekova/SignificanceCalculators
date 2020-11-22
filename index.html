@@ -237,6 +237,9 @@ Significance calculator
         else if(significance < 5) {
             show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
         }
+        else if(significance < 80 & significance >=5) {
+            show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval <span class="answer-number">[Not significant]</span> `, false);
+        }
         else {
             show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
         }        
