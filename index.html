@@ -167,7 +167,7 @@ Significance calculator
             show_result(result, `The percentages cannot be equal`, true);
         }
         else if (sample_size<100) {
-            show_result(result, `The minimum sample size required per each bucket is 100`, true);
+            show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">100</span>`, false);
         }
         else {
             show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">${sample_size}</span>`, false);
@@ -235,7 +235,7 @@ Significance calculator
             show_result(result, `The percentages cannot be equal`, true);
         }
         else if(significance < 5) {
-            show_result(result, `The difference is significant at 99% confidence interval`, false);
+            show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
         }
         else {
             show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
