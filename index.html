@@ -3,21 +3,60 @@
 <html>
 <head>
   <title>Calculator</title>
-  
+  <style type="text/css">
+    .error {
+        color: red;
+        text-decoration: underline;
+    }
+    h1 {
+        background-image: url("annie-spratt-r_m-JKJVto0-unsplash.jpg");
+        height: 10vw; 
+        background-repeat: repeat-y; 
+        background-size: cover; 
+        padding: 1vw;
+        font-size: 4vw;
+        margin-top: 0px;
+        color: black;
+        margin: 0px;
+    }
+    .calculator1 {
+        padding: 40px;
+        margin-top: 20px;
+        background-color: #c3ccff;
+        width: 50vw;
+    }
+    .calculator2 {
+        padding: 40px;
+        margin-top: 20px;  
+        background-color: #ffe5be;
+        width: 50vw;
+    }
+    body {
+        background-color: #fcfcfc;
+    }
+    .sample {
+        color: #3a58ff;
+        margin-top: 0px;
+    }
+    .sig {
+        color: #ff9800;
+        margin-top: 0px;
+    }
+    .flex {
+        display: flex;
+        gap: 50px;
+    }
+
+  </style>
 </head>
 
 <body>
     <h1>
-        Sample Size and Significance calculators
+        Sample size & <br> Significance calculators
     </h1>
-        <br>
-
-    <p>
-        
-        </p>
-        <br>
-
-    <h2>
+    <div class="flex">
+    <div class="calculator1">
+    <h2 class="sample">
         Sample Size calculator
         </h2>
     <p>
@@ -56,8 +95,10 @@
  <p id="Result">
  </p>
  <br>
+</div>
 
-<h2>
+<div class="calculator2">
+<h2 class="sig">
 Significance calculator
 </h2>
 <p>
@@ -90,25 +131,35 @@ Significance calculator
 <p id="Result1">
 </p>
 <br>
+</div>
+</div>
+
  <script type="text/javascript">
+    function show_result (element, message, iserror) {
+        if (iserror) {
+            element.className="error"
+        }
+        else {
+            element.className=""
+        }
+        element.innerText = message 
+    }
     function calculate_sample (e) {
         e.preventDefault();
         const control = parseFloat(document.getElementById("Control").value)/100;
         const exposed = parseFloat(document.getElementById("Exposed").value)/100;
         const confidence = parseFloat(document.getElementById("Confidence").value);
-    const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
-    if(control==exposed) {
-        document.getElementById("Result").innerText=`The percentages cannot be equal`;
-    }
-    else {
-    document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
-    }
-    if(sample_size<100) {
-        document.getElementById("Result").innerText=`The minimum sample size required per each bucket is 100`;
-    }
-    else {
-    document.getElementById("Result").innerText=`The minimum sample size required per each bucket is ${sample_size}`;
-    }
+        const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
+        const result = document.getElementById("Result")
+        if(control==exposed) {
+            show_result(result, `The percentages cannot be equal`, true);
+        }
+        else if (sample_size<100) {
+            show_result(result, `The minimum sample size required per each bucket is 100`, true);
+        }
+        else {
+            show_result(result, `The minimum sample size required per each bucket is ${sample_size}`, false);
+        }
     }
     document.getElementById("Sample").addEventListener("submit", calculate_sample)
 
@@ -164,17 +215,18 @@ Significance calculator
         const delta = exposed_perc - control_perc;
         const z_score = Math.abs(delta)/Math.sqrt(Math.pow(control_se,2)+(Math.pow(exposed_se,2)))
         const significance = stdNormal(z_score)
+        const result = document.getElementById("Result1")
         if(control_sample<30 || exposed_sample<30) {
-            document.getElementById("Result1").innerText=`The minimum required sample size in each bucket is 30`;
+            show_result(result, `The minimum required sample size in each bucket is 30`, true);
         }
-        else if(control_sample==exposed_sample) {
-        document.getElementById("Result1").innerText=`The percentages cannot be equal`;
+        else if(control_perc==exposed_perc) {
+            show_result(result, `The percentages cannot be equal`, true);
         }
         else if(significance < 5) {
-            document.getElementById("Result1").innerText=`The difference is significant at 99% confidence interval`;
+            show_result(result, `The difference is significant at 99% confidence interval`, false);
         }
         else {
-            document.getElementById("Result1").innerText=`The difference is significant at ${significance}% confidence interval`;;
+            show_result(result, `The difference is significant at ${significance}% confidence interval`, false);
         }        
 
     }
