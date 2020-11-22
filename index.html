@@ -54,6 +54,10 @@
     .input {
         margin-bottom: 10px;
     }
+    .answer-number {
+        font-size: 20px;
+        font-weight: bold;
+    }
 
   </style>
 </head>
@@ -150,7 +154,7 @@ Significance calculator
         else {
             element.className=""
         }
-        element.innerText = message 
+        element.innerHTML = message 
     }
     function calculate_sample (e) {
         e.preventDefault();
@@ -166,7 +170,7 @@ Significance calculator
             show_result(result, `The minimum sample size required per each bucket is 100`, true);
         }
         else {
-            show_result(result, `The minimum sample size required per each bucket is ${sample_size}`, false);
+            show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">${sample_size}</span>`, false);
         }
     }
     document.getElementById("Sample").addEventListener("submit", calculate_sample)
@@ -234,7 +238,7 @@ Significance calculator
             show_result(result, `The difference is significant at 99% confidence interval`, false);
         }
         else {
-            show_result(result, `The difference is significant at ${significance}% confidence interval`, false);
+            show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
         }        
 
     }
