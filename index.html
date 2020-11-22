@@ -20,14 +20,16 @@
         margin: 0px;
     }
     .calculator1 {
-        padding: 40px;
+        padding: 30px;
         margin-top: 20px;
+        margin-left: 10px;
         background-color: #c3ccff;
         width: 50vw;
     }
     .calculator2 {
-        padding: 40px;
-        margin-top: 20px;  
+        padding: 30px;
+        margin-top: 20px; 
+        margin-right: 10px; 
         background-color: #ffe5be;
         width: 50vw;
     }
@@ -44,7 +46,13 @@
     }
     .flex {
         display: flex;
-        gap: 50px;
+        gap: 40px;
+    }
+    .button {
+        margin-top: 30px;
+    }
+    .input {
+        margin-bottom: 10px;
     }
 
   </style>
@@ -68,17 +76,17 @@
      <label for="Control">
         Control %
      </label>
-     <input type="number" id="Control" step="any" min=0 max=100>
+     <input type="number" id="Control" step="any" min=0 max=100 class="input">
      <br>
      <label for="Exposed">
         Exposed %
      </label>
-     <input type="number" id="Exposed" step="any" min=0 max=100>
+     <input type="number" id="Exposed" step="any" min=0 max=100 class="input">
      <br>
      <label for="Confidence">
         Confidence Interval
      </label>
-     <select id="Confidence">
+     <select id="Confidence" class="input">
 <option value="1.64">
     95%
 </option>
@@ -90,7 +98,7 @@
 </option>
      </select>
      <br>
-<input type="submit" value="Calculate">
+<input type="submit" value="Calculate" class="button">
  </form>
  <p id="Result">
  </p>
@@ -109,24 +117,24 @@ Significance calculator
     <label for="ControlSample1">
         Control sample size
      </label>
-     <input type="number" id="ControlSample1" step="any" min=1>
+     <input type="number" id="ControlSample1" step="any" min=1 class="input">
      <label for="Control1">
         Control %
      </label>
-     <input type="number" id="Control1" step="any" min=0 max=100>
+     <input type="number" id="Control1" step="any" min=0 max=100 class="input">
     <br>
 
     <label for="ExposedSample1">
         Exposed sample size
      </label>
-     <input type="number" id="ExposedSample1" step="any" min=1>
+     <input type="number" id="ExposedSample1" step="any" min=1 class="input">
     <label for="Exposed1">
        Exposed %
     </label>
-    <input type="number" id="Exposed1" step="any" min=0 max=100>
+    <input type="number" id="Exposed1" step="any" min=0 max=100 class="input">
     <br>
 
-<input type="submit" value="Calculate">
+<input type="submit" value="Calculate" class="button">
 </form>
 <p id="Result1">
 </p>
