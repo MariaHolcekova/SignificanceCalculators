@@ -62,7 +62,7 @@
     }
     .title {
         margin-top: 0px;
-        margin-bottom: 0px;
+        margin-bottom: 30px;
         font-family: Arial, Helvetica, sans-serif;
     }
     .flex {
@@ -119,7 +119,7 @@
   text-align: left;
   padding: 5px;
   border-radius: 6px;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   position: absolute;
   z-index: 1;
 }
@@ -156,27 +156,25 @@
     </p>
     <div class="flex">
     <div class="calculator light_orange">
-    <h2 class="title dark_orange">
+    <h2 class="title dark_orange tooltip">
         Sample Size calculator
+        <span class="tooltiptext">The sample size calculator lets you find out the minimum sample size required in order to detect a statistically significant difference of a certain value between your Control and Exposed groups.</span>
         </h2>
-    <p>
-        The sample size calculator lets you find out the minimum sample size required in order to detect a statistically significant difference of a certain value between your Control and Exposed groups.
-    </p>
         <br>
  <form id="Sample">
-     <label for="Control" class="tooltip tooltip_exposed">
+     <label for="Control" class="tooltip">
         Control %
         <span class="tooltiptext">The expected percentage of instances among control group (e.g. percentage aware of a brand)</span>
      </label>
      <input type="number" id="Control" step="any" min=0 max=100 class="input">
      <br>
-     <label for="Exposed" class="tooltip tooltip_exposed">
+     <label for="Exposed" class="tooltip">
         Exposed %
         <span class="tooltiptext">The expected percentage of instances among exposed group (e.g. percentage aware of a brand)</span>
      </label>
      <input type="number" id="Exposed" step="any" min=0 max=100 class="input">
      <br>
-     <label for="Confidence"  class="tooltip tooltip_exposed">
+     <label for="Confidence"  class="tooltip">
         Confidence Interval
         <span class="tooltiptext">Confidence interval at which you want the difference to be statistically significant (the higher the CI, the greater the sample required)</span>
      </label>
@@ -200,12 +198,10 @@
 </div>
 
 <div class="calculator light_blue">
-<h2 class="title dark_blue">
+<h2 class="title dark_blue tooltip">
 Significance calculator
+<span class="tooltiptext">The significance calculator is a great way to quickly test whether your Brand Effect results might be statistically significant at a different level than the one tested in the vendor report.</span>
 </h2>
-<p>
-    The significance calculator is a great way to quickly test whether your Brand Effect results might be statistically significant at a different level than the one tested in the vendor report.
-    </p>
     <br>
 <form id="Significance">
     <label for="ControlSample1">
