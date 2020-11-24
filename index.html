@@ -43,6 +43,8 @@
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1em;
         flex-grow: 1;
+        padding-bottom: 3em;
+        margin-bottom: 5em;
     }
     .light_blue {
         background-color: #c1dce8;
@@ -81,6 +83,7 @@
         background-color: #4caf50;
         border-color: teal;
         padding: 0.4vw;
+        margin-top: 1.5em;
     }
     .input {
         margin-bottom: 10px;
@@ -126,6 +129,9 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+.read_me {
+    margin: 1.5em;
+}
 </style>
 
 </head>
@@ -138,22 +144,8 @@
         "With a large enough sample, any outrageous thing is likely to happen" - Frederick Mosteller
     </p>
     <p class="read_me">
-        READ ME 
-    </p>
-    <p class="desc">
-    <span class="highlight"> Both calculators are set to test one-tailed alternative hypothesis.</span> This means that, for instance, 
-    when you enter 30% for Control group and 40% for Exposed group, the Sample size calculator will evaluate 
-    the significance of the 10 percentage point increase only. This is done to reduce the unnecessary sample size/significance requirements 
-    of a two-tailed test, seeing as we rarely strive for negative lifts.
-    </p>
-    <p class="desc">
-    Also, an <span class="highlight"> important assumption of these calculators is equal <a href="https://en.wikipedia.org/wiki/Variance"  target="_blank">variances</a> within each group</span> (Control and Exposed). 
-    This means that we expect to see the lift to be statistically significant only if the extent of variability in each group is the same, 
-    i.e. if for some reason we collected a sample of Control group that feel very strongly towards the product 
-    but the Exposed sample within the same study have a more varied mixture of attitudes, the lift might not end up statistically significant 
-    even with sufficient sample size due to the unequal variance of attitudes within the groups. 
-    <br> Equally, if the variability is too large in both groups, the likelihood of picking up a sgnificant effect between them is fairly small.
-    </p>
+        <a href="#read_me">READ ME</a>
+    </p> 
     <div class="flex">
     <div class="calculator light_orange">
     <h2 class="title dark_orange tooltip">
@@ -336,5 +328,22 @@ Significance calculator
 
 
       </script>
+              <a name="read_me"> READ ME
+                <p class="desc">
+    <span class="highlight"> Both calculators are set to test one-tailed alternative hypothesis.</span> This means that, for instance, 
+    when you enter 30% for Control group and 40% for Exposed group, the Sample size calculator will evaluate 
+    the significance of the 10 percentage point increase only. This is done to reduce the unnecessary sample size/significance requirements 
+    of a two-tailed test, seeing as we rarely strive for negative lifts.
+    </p>
+    <p class="desc">
+    Also, an <span class="highlight"> important assumption of these calculators is equal <a href="https://en.wikipedia.org/wiki/Variance"  target="_blank">variances</a> within each group</span> (Control and Exposed). 
+    This means that we expect to see the lift to be statistically significant only if the extent of variability in each group is the same, 
+    i.e. if for some reason we collected a sample of Control group that feel very strongly towards the product 
+    but the Exposed sample within the same study have a more varied mixture of attitudes, the lift might not end up statistically significant 
+    even with sufficient sample size due to the unequal variance of attitudes within the groups. 
+    <br> Equally, if the variability is too large in both groups, the likelihood of picking up a sgnificant effect between them is fairly small.
+</p>
+
+</a>
 </body>
 </html>
