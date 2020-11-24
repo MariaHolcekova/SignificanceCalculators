@@ -106,8 +106,28 @@
         color: red;
         text-decoration: underline;
     }
+    .tooltip {
+        position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+    }
+    .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 13em;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  position: absolute;
+  z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
 
-  </style>
 </head>
 
 <body>
@@ -142,22 +162,23 @@
     <p>
         The sample size calculator lets you find out the minimum sample size required in order to detect a statistically significant difference of a certain value between your Control and Exposed groups.
     </p>
-        <p>It determines the minimum sample size for three different levels of statistical significance (i.e. confidence intervals): 80%, 90%, and 95%.
-        </p>
         <br>
  <form id="Sample">
-     <label for="Control">
+     <label for="Control" class="tooltip tooltip_exposed">
         Control %
+        <span class="tooltiptext">The expected percentage of instances among control group (e.g. percentage aware of a brand)</span>
      </label>
      <input type="number" id="Control" step="any" min=0 max=100 class="input">
      <br>
-     <label for="Exposed">
+     <label for="Exposed" class="tooltip tooltip_exposed">
         Exposed %
+        <span class="tooltiptext">The expected percentage of instances among exposed group (e.g. percentage aware of a brand)</span>
      </label>
      <input type="number" id="Exposed" step="any" min=0 max=100 class="input">
      <br>
-     <label for="Confidence">
+     <label for="Confidence"  class="tooltip tooltip_exposed">
         Confidence Interval
+        <span class="tooltiptext">Confidence interval at which you want the difference to be statistically significant (the higher the CI, the greater the sample required)</span>
      </label>
      <select id="Confidence" class="input">
 <option value="1.64">
