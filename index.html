@@ -49,7 +49,7 @@
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1em;
         flex-grow: 1;
-        padding-bottom: 3em;
+        padding-bottom: 5em;
         margin-bottom: 18em;
         margin-top: 4em;
         border-radius: 2em;
@@ -138,6 +138,9 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+.back_to_top {
+    text-align: center;
+}
 
 </style>
 
@@ -145,17 +148,18 @@
 
 <body>
     <h1>
-        Sample size & <br> Significance calculators
+        <a name="back_to_top">Sample size & <br> Significance calculators</a>
     </h1>
     <p class="quote">
         "With a large enough sample, any outrageous thing is likely to happen" - Frederick Mosteller
     </p>
     <p class="inline">
-        <a href="#read_me" class="links">READ ME</a>
-    </p> 
-    <p class="inline">
         <a href="#instructions" class="links">INSTRUCTIONS</a>
     </p> 
+    <p class="inline">
+        <a href="#read_me" class="links">READ ME</a>
+    </p> 
+
     <div class="flex">
     <div class="calculator light_orange">
     <h2 class="title dark_orange tooltip">
@@ -280,9 +284,9 @@ Significance calculator
     function stdNormal(z) {
     var j, k, kMax, m, values, total, subtotal, item, z2, z4, a, b;
 
-    // Power series is not stable at these extreme tail scenarios
-    if (z < -6) { return 0; }
-    if (z >  6) { return 1; }
+    // // Power series is not stable at these extreme tail scenarios
+    // if (z < -6) { return 0; }
+    // if (z >  6) { return 1; }
 
     m      = 1;        // m(k) == (2**k)/factorial(k)
     b      = z;        // b(k) == z ** (2*k + 1)
@@ -338,11 +342,14 @@ Significance calculator
             else if(control_perc==exposed_perc) {
                 show_result(result, `The percentages cannot be equal`, true);
             }
-            else if(significance < 5) {
-                show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
-            }
+            // else if(significance < 5) {
+            //     show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
+            // }
             else if(significance < 80 & significance >=5) {
                 show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
+            }
+            else if(significance == 100) {
+                show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
             }
             else {
                 show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
@@ -353,28 +360,65 @@ Significance calculator
     document.getElementById("Significance").addEventListener("submit", calculate_sig)
 
 
+
       </script>
-              <a name="read_me"> READ ME
+      <a name="instructions"> <h3>INSTRUCTIONS</h3>
+        <p class="desc">
+            <span class="highlight"> Sample Size calculator</span> lets you find out the minimum sample size required 
+            in order to detect a statistically significant difference of a certain value between your Control and Exposed groups. 
+            You can do so by filling in the expected Control and Exposed percentages, choosing the <a href="https://en.wikipedia.org/wiki/Confidence_interval"  target="_blank">confidence interval</a> and pressing "Calculate".
+            <br>  
+            <br> Example: You expect the awareness of a brand without any ad exposure (Control) to be 30% and the benchmark for this metric 
+            tells you that the average lift we see in Brand Awareness is 5 percentage points (i.e. Exposed = 35%). 
+            Your client likes to have the significance tested at the 90% Confidence interval. 
+            If you put these values into the calculator, you'll see what the minimum sample you will thus need to collect in your study is 449. This means that for the given lift (5ppts) from 30% Awareness in the Control group,
+            you need to have collected at least 449 Control and 449 Exposed respondents for the p-value to be below 0.1 and thus significant at the 90% confidence interval.
+            <br> 
+            <br> You can then, for instance, use this number to determine what your reach needs to be in order to collect sufficient sample 
+            (e.g. if the response rate is 10% then you need to reach 10 times the sample size minimum in each group to collect enough 
+            responses for the expected difference in Control % and Exposed % to be statistically significant).
+            <br>
+            <br>
+            <br>
+            <span class="highlight"> Significance calculator</span> lets you find out whether the difference in percentages between Control and Exposed groups 
+            is statistically significant and at which confidence interval, rounded to the nearest multiple of 5 (with the exception of 99% CI). 
+            <br>
+            <br> Example: You got your Brand Effect vendor report back, whereby all differences between Control and Exposed were tested at the 
+            90% confidence interval. In this study, you have collected a sample of 346 respondents within the Control group and 521 respondents 
+            within the Exposed group. Your client's primary metric (e.g. Brand Awareness) saw a lift of 3 percentage points from 20% (control) 
+            to 23% (exposed). Within your report, this difference is not statistically significant at 90% CI with the given sample sizes, but your 
+            client is interested to know whether this lift is significant at a lower threshold. Before going back to your vendor and losing time 
+            waiting for them to create another report testing the differences at a 80% confidence interval, you can use the Significance calculator 
+            to find this out instantly. In this example, the lift is significant at 85% confidence interval so you can deliver the good news to your 
+            client and potentially ask your vendor for a new report, knowing the lift will come back significant. 
+            <p class="back_to_top">
+                <a href="#back_to_top">back to top</a>
+            </p> 
+            <br>
+
+        </p>
+        </a>
+              <a name="read_me"> <h3>READ ME</h3> 
                 <p class="desc">
     <span class="highlight"> Both calculators are set to test <a href="https://en.wikipedia.org/wiki/One-_and_two-tailed_tests"  target="_blank">one-tailed alternative hypothesis</a>.</span> This means that, for instance, 
     when you enter 30% for Control group and 40% for Exposed group, the Sample size calculator will evaluate 
     the significance of the 10 percentage point increase only. This is done to reduce the unnecessary sample size/significance requirements 
     of a two-tailed test, seeing as we rarely strive for negative lifts.
 <br>
-    Also, an <span class="highlight"> important assumption of these calculators is equal <a href="https://en.wikipedia.org/wiki/Variance"  target="_blank">variances</a> within each group</span> (Control and Exposed). 
+    <br> Also, an <span class="highlight"> important assumption of these calculators is equal <a href="https://en.wikipedia.org/wiki/Variance"  target="_blank">variances</a> within each group</span> (Control and Exposed). 
     This means that we expect to see the lift to be statistically significant only if the extent of variability in each group is the same, 
     i.e. if for some reason we collected a sample of Control group that feel very strongly towards the product 
     but the Exposed sample within the same study have a more varied mixture of attitudes, the lift might not end up statistically significant 
     even with sufficient sample size due to the unequal variance of attitudes within the groups. 
     <br> Equally, if the variability is too large in both groups, the likelihood of picking up a significant effect between them is fairly small.
+    <p class="back_to_top">
+        <a href="#back_to_top">back to top</a>
+    </p> 
+    <br>
 </p>
 
 </a>
-<a name="instructions"> INSTRUCTIONS
-    <p class="desc">
 
-    </p>
-    </a>
 
 </body>
 </html>
