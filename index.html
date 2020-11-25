@@ -21,8 +21,9 @@
         font-family: Arial, Helvetica, sans-serif;
     }
     .quote {
-        text-align: center;
+        text-align: right;
         margin-bottom: 3rem;
+        padding-right: 1em;
         font-family: Arial, Helvetica, sans-serif;
         font-style: italic;
         margin-top: 0.5rem;
@@ -91,6 +92,7 @@
         border-color: teal;
         padding: 0.4vw;
         margin-top: 1.5em;
+        border-radius: 0.7em;
     }
     .input {
         margin-bottom: 10px;
@@ -248,19 +250,25 @@ Significance calculator
     }
     function calculate_sample (e) {
         e.preventDefault();
-        const control = parseFloat(document.getElementById("Control").value)/100;
-        const exposed = parseFloat(document.getElementById("Exposed").value)/100;
-        const confidence = parseFloat(document.getElementById("Confidence").value);
-        const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
-        const result = document.getElementById("Result")
-        if(control==exposed) {
-            show_result(result, `The percentages cannot be equal`, true);
+        if (document.getElementById("Control").value == "" || document.getElementById("Exposed").value == "") {
+            alert("The cells cannot be empty");
+            return false;
         }
-        else if (sample_size<100) {
-            show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">100</span>`, false);
-        }
-        else {
-            show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">${sample_size}</span>`, false);
+        else { 
+            const control = parseFloat(document.getElementById("Control").value)/100;
+            const exposed = parseFloat(document.getElementById("Exposed").value)/100;
+            const confidence = parseFloat(document.getElementById("Confidence").value);
+            const sample_size = Math.ceil((((control*(1-control))+(exposed*(1-exposed)))/(Math.pow(control-exposed,2)))*(1.28+confidence))
+            const result = document.getElementById("Result")
+            if(control==exposed) {
+                show_result(result, `The percentages cannot be equal`, true);
+            }
+            else if (sample_size<100) {
+                show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">100</span>`, false);
+            }
+            else {
+                show_result(result, `The minimum sample size required per each bucket is <span class="answer-number">${sample_size}</span>`, false);
+            }
         }
     }
     document.getElementById("Sample").addEventListener("submit", calculate_sample)
@@ -308,34 +316,40 @@ Significance calculator
 
     function calculate_sig (e) {
         e.preventDefault();
-        const control_sample = parseFloat(document.getElementById("ControlSample1").value);
-        const control_perc = parseFloat(document.getElementById("Control1").value)/100;
-        const control_se = Math.sqrt((control_perc*(1-control_perc)/control_sample));
-        const exposed_sample = parseFloat(document.getElementById("ExposedSample1").value);
-        const exposed_perc = parseFloat(document.getElementById("Exposed1").value)/100;
-        const exposed_se = Math.sqrt((exposed_perc*(1-exposed_perc)/exposed_sample));
-        const delta = exposed_perc - control_perc;
-        const z_score = Math.abs(delta)/Math.sqrt(Math.pow(control_se,2)+(Math.pow(exposed_se,2)))
-        const significance = stdNormal(z_score)
-        const result = document.getElementById("Result1")
-        if(control_sample<30 || exposed_sample<30) {
-            show_result(result, `The minimum required sample size in each bucket is 30`, true);
+        if (document.getElementById("Control1").value == "" || document.getElementById("Exposed1").value == "" ||
+        document.getElementById("ControlSample1").value == "" || document.getElementById("ExposedSample1").value == "") {
+            alert("The cells cannot be empty");
+            return false;
         }
-        else if(control_perc==exposed_perc) {
-            show_result(result, `The percentages cannot be equal`, true);
-        }
-        else if(significance < 5) {
-            show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
-        }
-        else if(significance < 80 & significance >=5) {
-            show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
-        }
-        else {
-            show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
-        }        
+        else { 
+            const control_sample = parseFloat(document.getElementById("ControlSample1").value);
+            const control_perc = parseFloat(document.getElementById("Control1").value)/100;
+            const control_se = Math.sqrt((control_perc*(1-control_perc)/control_sample));
+            const exposed_sample = parseFloat(document.getElementById("ExposedSample1").value);
+            const exposed_perc = parseFloat(document.getElementById("Exposed1").value)/100;
+            const exposed_se = Math.sqrt((exposed_perc*(1-exposed_perc)/exposed_sample));
+            const delta = exposed_perc - control_perc;
+            const z_score = Math.abs(delta)/Math.sqrt(Math.pow(control_se,2)+(Math.pow(exposed_se,2)))
+            const significance = stdNormal(z_score)
+            const result = document.getElementById("Result1")
+            if(control_sample<30 || exposed_sample<30) {
+                show_result(result, `The minimum required sample size in each bucket is 30`, true);
+            }
+            else if(control_perc==exposed_perc) {
+                show_result(result, `The percentages cannot be equal`, true);
+            }
+            else if(significance < 5) {
+                show_result(result, `The difference is significant at <span class="answer-number">99%</span> confidence interval`, false);
+            }
+            else if(significance < 80 & significance >=5) {
+                show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
+            }
+            else {
+                show_result(result, `The difference is significant at <span class="answer-number">${significance}%</span> confidence interval`, false);
+            }        
 
+        }
     }
-    
     document.getElementById("Significance").addEventListener("submit", calculate_sig)
 
 
