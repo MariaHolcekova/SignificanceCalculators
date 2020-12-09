@@ -194,13 +194,13 @@
         <span class="tooltiptext">Confidence interval at which you want the difference to be statistically significant (the higher the CI, the greater the sample required)</span>
      </label>
      <select id="Confidence" class="input">
-<option value="1.64">
+<option value="1.96">
     95%
 </option>
-<option value="1.28">
+<option value="1.64">
     90%
 </option>
-<option value="0.84">
+<option value="1.28">
     80%
 </option>
      </select>
@@ -290,7 +290,7 @@ Significance calculator
     return Math.floor(x/5)*5;
 }
     function stdNormal(z) {
-    var j, k, kMax, m, values, total, subtotal, item, z2, z4, a, b;
+    var j, k, kMax, m, values, total, subtotal, item, z2, z4, a, b, pval, twopval;
 
     // // Power series is not stable at these extreme tail scenarios
     // if (z < -6) { return 0; }
@@ -323,7 +323,10 @@ Significance calculator
 
     // Multiply total by 1/sqrt(2*PI)
     // Then add 0.5 so that stdNormal(0) === 0.5
-    return round5(((0.5 + 0.3989422804014327 * total))*100);
+    pval = 1 - (((0.5 + 0.3989422804014327 * total)));
+    twopval = 2*pval
+    return round5((1-twopval)*100)
+
 }
 
     function calculate_sig (e) {
@@ -407,10 +410,9 @@ Significance calculator
         </a>
               <a name="read_me"> <h3>READ ME</h3> 
                 <p class="desc">
-    <span class="highlight"> Both calculators are set to test <a href="https://en.wikipedia.org/wiki/One-_and_two-tailed_tests"  target="_blank">one-tailed alternative hypothesis</a>.</span> This means that, for instance, 
+    <span class="highlight"> Both calculators are set to test <a href="https://en.wikipedia.org/wiki/One-_and_two-tailed_tests"  target="_blank">two-tailed alternative hypothesis</a>.</span> This means that, for instance, 
     when you enter 30% for Control group and 40% for Exposed group, the Sample size calculator will evaluate 
-    the significance of the 10 percentage point increase only. This is done to reduce the unnecessary sample size/significance requirements 
-    of a two-tailed test, seeing as we rarely strive for negative lifts.
+    the significance of the 10 percentage point increase and descrease between the groups. This is done to mimic the approach vendors use to test significance within studies. 
 <br>
     <br> Also, an <span class="highlight"> important assumption of these calculators is equal <a href="https://en.wikipedia.org/wiki/Variance"  target="_blank">variances</a> within each group</span> (Control and Exposed). 
     This means that we expect to see the lift to be statistically significant only if the extent of variability in each group is the same, 
